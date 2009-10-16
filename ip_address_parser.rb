@@ -1,11 +1,17 @@
 class IpAddressParser
 
+  attr_reader :ip_addresses
   def initialize(line)
-    # TODO: parse the line, determine the begin and length of the IP address in the string
-  end
-
-  # gets all the IP address in the line as an array
-  def ip_addresses
+    pos=0
+    @ip_addresses=[]
+    re = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/
+    m = re.match line
+    tmp = line
+    while not m.nil?
+      @ip_addresses << m[0]
+      tmp = tmp[m.offset(0)[1], tmp.size]
+      m = re.match tmp
+    end
   end
 
 end
